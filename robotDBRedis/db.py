@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import redis
+
 class Database(object):
     """Database object for redis operations"""
     def __init__(self, host='localhost', port=6379, db=0, id=0):
