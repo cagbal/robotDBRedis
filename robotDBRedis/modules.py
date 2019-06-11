@@ -10,7 +10,7 @@ class Module(object):
     """Base class for database entries."""
     def __init__(self, module_name, host='localhost', port=6379, db=0, id=0):
         super(Module, self).__init__()
-        
+
         self._redis = Database(host=host, port=port, db=db)
 
         self.property_list = []
@@ -54,7 +54,7 @@ class User(Module):
     """docstring for User.
     Database class for user object. Intended to keep personal
     data of the user and some states"""
-    def __init__(self, module_name = "user", name="user", id=0,
+    def __init__(self, name="user", module_name = "user", id=0,
                  host='localhost', port=6379, db=0):
         super(User, self).__init__(module_name, host=host, port=port,
                  db=db, id=id)
