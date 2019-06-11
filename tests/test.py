@@ -2,6 +2,9 @@
 import unittest
 
 
-class MyTest(unittest.TestCase):
-    def test(self):
-        self.assertEqual(fun(3), 4)
+from robotDBRedis.modules import User
+
+class CreateAUserTest(unittest.TestCase):
+    def test_name(self):
+        user = User("Cagatay")
+        self.assertEqual(user.get_name(), "cagatay")
