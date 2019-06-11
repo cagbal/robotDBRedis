@@ -2,23 +2,22 @@
 
 import redis
 
-from fields import TextField, IntField, Field
+from .fields import TextField, IntField, Field
+from .db import Database
 
 
 class Module(object):
-    """Base class for database modules."""
+    """Base class for database entries."""
     def __init__(self, module_name, host='localhost', port=6379, db=0, id=0):
         super(Module, self).__init__()
-        self._redis = redis.Redis(host=host, port=port, db=db)
+        
+        self._redis = Database(host=host, port=port, db=db)
 
         self.property_list = []
 
         self._module_name = module_name
 
         self._id = self.add_field(IntField("id", id))
-
-    def __del__(self):
-        self._redis.save()
 
     def save(self):
         self._redis.save()
@@ -63,6 +62,8 @@ class User(Module):
         self._name = self.add_field(TextField("username", name))
         # count how many times we serve to that person
         self._serve_counter = self.add_field(IntField("serve_count", 0))
+
+        self.push()
 
     def get_name(self):
         return self._name.get()
