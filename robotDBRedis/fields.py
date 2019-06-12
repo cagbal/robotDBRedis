@@ -61,3 +61,15 @@ class IntField(Field):
 
     def decrement(self):
         self._arg = self._arg - 1
+
+class CustomField(Field):
+    """docstring for NameField.
+    Just a field containing a custom object """
+    def __init__(self, field_name, arg):
+        super(CustomField, self).__init__(field_name, arg, type(arg))
+
+    def get(self):
+        return self._arg
+
+    def set(self, val):
+        self._arg = val

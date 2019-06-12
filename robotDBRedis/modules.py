@@ -14,11 +14,11 @@ class Module(object):
     def __init__(self, module_name, host='localhost', port=6379, db=0):
         super(Module, self).__init__()
 
-        self._db = Database(host=host, port=port, db=db)
-
         self.property_list = []
 
         self._module_name = module_name
+
+        self._db = Database(host=host, port=port, db=db)
 
         id = self._db.get_unique_id(module_name)
 
