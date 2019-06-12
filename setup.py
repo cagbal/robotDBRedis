@@ -1,17 +1,17 @@
-from distutils import setup
+from distutils.core import setup
 
 setup(
 
-    name=='robotDBRedis',
+    name='robotDBRedis',
 
-    version=='1.0',
+    version='1.0',
 
-    description=='A small python module to handle DB operations for robots',
+    description='A small python module to handle DB operations for robots',
 
-    author=='Cagatay Odabasi',
+    author='Cagatay Odabasi',
 
-    author email='cagatayodabasi91@gmail.com',
+    author_email='cagatayodabasi91@gmail.com',
 
-    packages ['robotDBRedis'],
+    packages=['robotDBRedis'],
 
 )
