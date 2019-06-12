@@ -38,7 +38,6 @@ class Database(object):
             last_key = sorted(keys)[-1].decode("utf-8")
             #print(last_key)
             last_id = last_key.split(":")[-1]
-            print(last_id)
 
             return int(last_id) + 1
         else:
