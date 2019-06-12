@@ -26,3 +26,20 @@ class Database(object):
 
     def hash_increment(self, hash, field_name,incement=1):
         self._redis.hincrby(hash, field_name, increment)
+
+    def get_unique_id(self, module_name):
+        keys = []
+        if isinstance(module_name, str):
+            keys = self._redis.keys(module_name + "*")
+        else:
+            raise Exception("Module name should be a type of", str)
+
+        if keys:
+            last_key = sorted(keys)[-1].decode("utf-8")
+            #print(last_key)
+            last_id = last_key.split(":")[-1]
+            print(last_id)
+
+            return int(last_id) + 1
+        else:
+            return 0
