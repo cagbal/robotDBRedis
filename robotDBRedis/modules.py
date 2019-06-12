@@ -16,6 +16,8 @@ class Module(object):
 
         self._id = self.add_field(IntField("id", id))
 
+        self.hash = self._module_name + ":" + str(self._id.get())
+
     def save(self):
         self._db.save()
 
@@ -30,8 +32,7 @@ class Module(object):
         for field in self.property_list:
             dict_to_push[field.field_name] = str(field.get()).lower()
 
-        self._db.push(self._module_name + ":" + str(self._id.get()),
-                        dict_to_push)
+        self._db.push(self.hash, dict_to_push)
 
     def add_field(self, field):
         if isinstance(field, Field):
