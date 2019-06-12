@@ -42,6 +42,8 @@ Note that the type of objects that can be stored in Redis are limited.
 
 @setter_decorator is checking if you are giving the correct type to setter also it applies deepcopy to the input.
 
+The most important thing is that .get() method MUST return an object which can be converted into string with str() method. For instance, I apply " ".join([el for el in self._arg]) to ListField.
+
 Example custom field:
 
     class CustomField(Field):
