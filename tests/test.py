@@ -43,16 +43,22 @@ class UserTest(unittest.TestCase):
         user5 = User("Bazzi")
         user6 = User("Jacob")
 
-        self.assertEqual(user0.get_hash(), "user:00000")
-        self.assertEqual(user1.get_hash(), "user:00001")
+
         self.assertEqual(user2.get_hash(), "user:00002")
         self.assertEqual(user3.get_hash(), "user:00003")
         self.assertEqual(user4.get_hash(), "user:00004")
         self.assertEqual(user5.get_hash(), "user:00005")
         self.assertEqual(user6.get_hash(), "user:00006")
 
-    def test_serve_count(self):
-        pass
-
     def test_serve_increment(self):
-        pass
+        flushall()
+
+        user0 = User("Cagatay")
+        user1 = User("Mark")
+
+        user0.increment_serve_count()
+        user0.increment_serve_count()
+        user0.increment_serve_count()
+
+        self.assertEqual(user0.get_serve_count(), "3")
+        self.assertEqual(user1.get_serve_count(), "0")
