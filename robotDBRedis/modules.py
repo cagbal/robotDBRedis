@@ -31,13 +31,10 @@ class Module(object):
         dict_to_push = {}
 
         for field in self.property_list:
-            dict_to_push[field.field_name] = field.get()
+            dict_to_push[field.field_name] = str(field.get()).lower()
 
-        if dict_to_push:
-            self._redis.hmset(self._module_name + ":" + str(self._id.get()),
-                             dict_to_push)
-
-        print(dict_to_push)
+        self._redis.push(self._module_name + ":" + str(self._id.get()),
+                        dict_to_push)
 
     def add_field(self, field):
         if isinstance(field, Field):

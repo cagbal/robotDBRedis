@@ -14,20 +14,12 @@ class Database(object):
     def save(self):
         self._redis.save()
 
-    def push(self, key, dict):
+    def push(self, key, dict_to_push):
         """
         Pushes everything to database without saving it, to save it you should
         use .save() method
         """
-        # TODO: Burasi degisecek
-
-        dict_to_push = {}
-
-        for field in self.property_list:
-            dict_to_push[field.field_name] = field.get()
-
-        if dict_to_push:
-            self._redis.hmset(self._module_name + ":" + str(self._id.get()),
-                             dict_to_push)
-
-        print(dict_to_push)
+        if isinstance(dict_to_push, dict):
+            self._redis.hmset(key, dict_to_push)
+        else:
+            raise Exception("Parameter should be a", dict)
