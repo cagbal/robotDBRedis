@@ -4,7 +4,7 @@ import unittest
 import redis
 
 from robotDBRedis.modules import User
-from robotDBRedis.fields import IntField, TextField, CustomField
+from robotDBRedis.fields import IntField, TextField, ListField, CustomField
 
 def flushall():
     r = redis.Redis(host='localhost', port=6379, db=0)
@@ -109,7 +109,35 @@ class FieldTests(unittest.TestCase):
 
         self.assertEqual(f.get(), "mark")
 
-    def test_custom_field(self):
-        f = CustomField("random_name", [1,2,3,4])
+    def test_list_field(self):
+        f = ListField("random_name", [1,2,3,4])
 
         self.assertEqual(f.get(), [1,2,3,4])
+
+
+        # Deep copy test
+
+        L = [1,2,3,4,5]
+
+        f.set(L)
+
+        L.append(100)
+
+        self.assertNotEqual(f.get(), L)
+
+    def test_custom_field(self):
+        class A(object):
+            """docstring for A."""
+            def __init__(self, arg):
+                super(A, self).__init__()
+                self.arg = arg
+
+        custom_class_instance = A(3)
+
+        f = CustomField("random_name", custom_class_instance)
+
+        self.assertEqual(f.get().arg, custom_class_instance.arg)
+
+        custom_class_instance.arg = 5
+
+        self.assertNotEqual(f.get().arg, custom_class_instance.arg)
