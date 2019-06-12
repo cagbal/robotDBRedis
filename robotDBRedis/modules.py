@@ -35,7 +35,7 @@ class Module(object):
         dict_to_push = {}
 
         for field in self.property_list:
-            dict_to_push[field.field_name] = str(field.get()).lower()
+            dict_to_push[field.get_field_name()] = str(field.get()).lower()
 
         self._db.push(self._hash, dict_to_push)
 
@@ -66,7 +66,8 @@ class User(Module):
         self.push()
 
     def get_name(self):
-        return self._name.get()
+        return self._db.get_field_value(
+                        self._hash, self._name.get_field_name())
 
     def get_serve_count(self):
         return self._serve_counter.get()

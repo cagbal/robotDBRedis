@@ -24,6 +24,9 @@ class Database(object):
         else:
             raise Exception("Parameter should be a", dict)
 
+    def get_field_value(self, hash, field_name):
+        return self._redis.hget(hash, field_name).decode("utf-8")
+
     def hash_increment(self, hash, field_name,incement=1):
         self._redis.hincrby(hash, field_name, increment)
 
@@ -36,7 +39,6 @@ class Database(object):
 
         if keys:
             last_key = sorted(keys)[-1].decode("utf-8")
-            #print(last_key)
             last_id = last_key.split(":")[-1]
 
             return int(last_id) + 1

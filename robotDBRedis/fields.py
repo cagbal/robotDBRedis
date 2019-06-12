@@ -10,9 +10,12 @@ class Field(object):
             raise Exception('Parameter should be a', type)
 
         if isinstance(field_name, str):
-            self.field_name = field_name
+            self._field_name = field_name
         else:
             raise Exception('Field name should be a', str)
+
+    def get_field_name(self):
+        return self._field_name
 
     def get(self):
         """

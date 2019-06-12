@@ -28,9 +28,8 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user2.get_name(), "daisy")
         self.assertEqual(user3.get_name(), "baron")
         self.assertEqual(user4.get_name(), "bruno")
-        self.assertEqual(user5.get_name(), "bazzsi")
+        self.assertEqual(user5.get_name(), "bazzi")
         self.assertEqual(user6.get_name(), "jacob")
-
 
 
     def test_user_hash(self):
@@ -51,3 +50,9 @@ class UserTest(unittest.TestCase):
         self.assertEqual(user4.get_hash(), "user:00004")
         self.assertEqual(user5.get_hash(), "user:00005")
         self.assertEqual(user6.get_hash(), "user:00006")
+
+    def test_serve_count(self):
+        pass
+
+    def test_serve_increment(self):
+        pass
