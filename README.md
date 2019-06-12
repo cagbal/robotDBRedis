@@ -2,6 +2,7 @@
 # What's going on everybody? robotDBRedis here.
 
 This is a really young repo, so please be open to adventures.
+[![codebeat badge](https://codebeat.co/badges/1e4f4aab-918c-473a-837e-937a04926a2a)](https://codebeat.co/projects/github-com-cagbal-robotdbredis-master)
 
 ![alt text](https://github.com/cagbal/robotDBRedis/blob/master/imgs/logo.png "robotDBRedis logo" )
 
