@@ -3,6 +3,12 @@ from .fields import TextField, IntField, Field
 from .db import Database
 
 
+def update_decorator(func):
+    def wrapper(self):
+        func(self)
+        self.push()
+    return wrapper
+
 class Module(object):
     """Base class for database entries."""
     def __init__(self, module_name, host='localhost', port=6379, db=0):
@@ -25,6 +31,7 @@ class Module(object):
 
     def get_hash(self):
         return self._hash
+
 
     def push(self):
         """
@@ -74,8 +81,9 @@ class User(Module):
     def get_name(self):
         return self.get_field_value(self._name)
 
-    def get_serve_counter(self):
+    def get_serve_count(self):
         return self.get_field_value(self._serve_counter)
 
+    @update_decorator
     def increment_serve_count(self):
         self._serve_counter.increment()
