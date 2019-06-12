@@ -86,6 +86,10 @@ class ListField(Field):
         super(ListField, self).__init__(field_name, arg, deepcopy(list))
 
     def get(self):
+        # A string value is needed that's why, we will return str version of the list
+        return self.str()
+
+    def get_list(self):
         return self._arg
 
     @setter_decorator

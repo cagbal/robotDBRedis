@@ -112,7 +112,7 @@ class FieldTests(unittest.TestCase):
     def test_list_field(self):
         f = ListField("random_name", [1,2,3,4])
 
-        self.assertEqual(f.get(), [1,2,3,4])
+        self.assertEqual(f.get_list(), [1,2,3,4])
 
         # Deep copy test
 
@@ -122,7 +122,7 @@ class FieldTests(unittest.TestCase):
 
         L.append(100)
 
-        self.assertNotEqual(f.get(), L)
+        self.assertNotEqual(f.get_list(), L)
 
         # Str conversion test
 
@@ -130,7 +130,7 @@ class FieldTests(unittest.TestCase):
 
         f.set(L)
 
-        self.assertEqual(f.str(), " ".join([str(el) for el in L]))
+        self.assertEqual(f.get(), " ".join([str(el) for el in L]))
 
 
     def test_custom_field(self):
