@@ -62,3 +62,22 @@ class UserTest(unittest.TestCase):
 
         self.assertEqual(user0.get_serve_count(), "3")
         self.assertEqual(user1.get_serve_count(), "0")
+
+
+class DatabaseTest(unittest.TestCase):
+    def test_hash_increment(self):
+        flushall()
+
+        user0 = User("Cagatay")
+        user1 = User("Mark")
+
+        user0._db.hash_increment(user0.get_hash(),
+                                user0._serve_counter.get_field_name())
+
+        user1._db.hash_increment(user1.get_hash(),
+                                user1._serve_counter.get_field_name(), 145)
+
+        self.assertEqual(user0.get_serve_count(), "1")
+        self.assertEqual(user1.get_serve_count(), "145")
+
+    
