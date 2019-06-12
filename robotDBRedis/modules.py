@@ -16,10 +16,13 @@ class Module(object):
 
         self._id = self.add_field(IntField("id", id))
 
-        self.hash = self._module_name + ":" + str(self._id.get())
+        self._hash = self._module_name + ":" + str(self._id.get()).zfill(5)
 
     def save(self):
         self._db.save()
+
+    def get_hash(self):
+        return self._hash
 
     def push(self):
         """
