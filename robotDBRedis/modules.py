@@ -9,12 +9,13 @@ def update_decorator(func):
         self.push()
     return wrapper
 
+
 class Module(object):
     """Base class for database entries."""
     def __init__(self, module_name, host='localhost', port=6379, db=0):
         super(Module, self).__init__()
 
-        self.property_list = []
+        self.field_list = []
 
         self._module_name = module_name
 
@@ -32,6 +33,16 @@ class Module(object):
     def get_hash(self):
         return self._hash
 
+    def capture(self, hash):
+        """
+        Captures the object with its hash key
+        """
+
+        obj = self._db.get_object(hash)
+
+        for p in self.field_list:
+
+            p.set(obj[p.get_field_name()])
 
     def push(self):
         """
@@ -41,14 +52,14 @@ class Module(object):
 
         dict_to_push = {}
 
-        for field in self.property_list:
+        for field in self.field_list:
             dict_to_push[field.get_field_name()] = str(field.get()).lower()
 
         self._db.push(self._hash, dict_to_push)
 
     def add_field(self, field):
         if isinstance(field, Field):
-            self.property_list.append(field)
+            self.field_list.append(field)
             return field
         else:
             raise Exception('Parameter should be a', Field)

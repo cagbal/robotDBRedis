@@ -3,7 +3,7 @@ import unittest
 
 import redis
 
-from robotDBRedis.modules import User
+from robotDBRedis.modules import User, Module
 from robotDBRedis.fields import IntField, TextField, ListField, CustomField
 
 def flushall():
@@ -63,6 +63,22 @@ class UserTest(unittest.TestCase):
 
         self.assertEqual(user0.get_serve_count(), "3")
         self.assertEqual(user1.get_serve_count(), "0")
+
+    def test_capture_module(self):
+        flushall()
+
+        user0 = User("Cagatay")
+        user1 = User("Mark")
+
+        user00 = User("")
+
+        user00.capture("user:00001")
+
+        self.assertEqual(user1.get_id(), 1)
+        self.assertEqual(user1.get_name(), "mark")
+        self.assertEqual(user1.get_serve_count(), "0")
+
+
 
 
 class DatabaseTest(unittest.TestCase):

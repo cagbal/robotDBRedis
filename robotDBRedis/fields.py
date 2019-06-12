@@ -7,6 +7,8 @@ def setter_decorator(func):
     def wrapper(self, val):
         if isinstance(val, self._type):
             func(self, deepcopy(val))
+        elif isinstance(val, str):
+            func(self, val)
         else:
             raise Exception('Parameter should be a', self._type)
 
@@ -70,7 +72,10 @@ class IntField(Field):
 
     @setter_decorator
     def set(self, val):
-        self._arg = val
+        if isinstance(val, str):
+            self._arg = int(val)
+        else:
+            self._arg = val
 
 
     def increment(self):
@@ -94,7 +99,11 @@ class ListField(Field):
 
     @setter_decorator
     def set(self, val):
-        self._arg = val
+        if isinstance(val, str):
+            val = val.split(" ")
+            self._arg = val
+        else:
+            self._arg = val
 
     def str(self):
         # Returns a string version of the list

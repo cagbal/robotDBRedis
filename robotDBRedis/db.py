@@ -27,6 +27,14 @@ class Database(object):
     def get_field_value(self, hash, field_name):
         return self._redis.hget(hash, field_name).decode("utf-8")
 
+    def get_object(self, hash):
+        d = self._redis.hgetall(hash)
+
+        d2 = dict((k.decode("utf-8"),
+             v.decode("utf-8")) for k, v in d.items())
+
+        return d2
+
     def hash_increment(self, hash, field_name,increment=1):
         self._redis.hincrby(hash, field_name, increment)
 
