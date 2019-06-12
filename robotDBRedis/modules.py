@@ -63,7 +63,9 @@ class User(Module):
         super(User, self).__init__(module_name, host=host, port=port,
                  db=db)
 
+        # username holder
         self._name = self.add_field(TextField("username", name))
+
         # count how many times we serve to that person
         self._serve_counter = self.add_field(IntField("serve_count", 0))
 
