@@ -49,6 +49,10 @@ class Module(object):
     def get_id(self):
         return self._id.get()
 
+    def get_field_value(self, field):
+        return self._db.get_field_value(
+                        self._hash, field.get_field_name())
+
 
 class User(Module):
     """docstring for User.
@@ -66,11 +70,10 @@ class User(Module):
         self.push()
 
     def get_name(self):
-        return self._db.get_field_value(
-                        self._hash, self._name.get_field_name())
+        return self.get_field_value(self._name)
 
-    def get_serve_count(self):
-        return self._serve_counter.get()
+    def get_serve_counter(self):
+        return self.get_field_value(self._serve_counter)
 
     def increment_serve_count(self):
         self._serve_counter.increment()
