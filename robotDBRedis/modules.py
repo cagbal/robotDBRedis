@@ -5,7 +5,7 @@ from .db import Database
 
 class Module(object):
     """Base class for database entries."""
-    def __init__(self, module_name, host='localhost', port=6379, db=0, id=0):
+    def __init__(self, module_name, host='localhost', port=6379, db=0):
         super(Module, self).__init__()
 
         self._db = Database(host=host, port=port, db=db)
@@ -13,6 +13,8 @@ class Module(object):
         self.property_list = []
 
         self._module_name = module_name
+
+        id = self._db.get_unique_id(module_name)
 
         self._id = self.add_field(IntField("id", id))
 
@@ -35,7 +37,7 @@ class Module(object):
         for field in self.property_list:
             dict_to_push[field.field_name] = str(field.get()).lower()
 
-        self._db.push(self.hash, dict_to_push)
+        self._db.push(self._hash, dict_to_push)
 
     def add_field(self, field):
         if isinstance(field, Field):
@@ -52,10 +54,10 @@ class User(Module):
     """docstring for User.
     Database class for user object. Intended to keep personal
     data of the user and some states"""
-    def __init__(self, name="user", module_name = "user", id=0,
+    def __init__(self, name="user", module_name = "user",
                  host='localhost', port=6379, db=0):
         super(User, self).__init__(module_name, host=host, port=port,
-                 db=db, id=id)
+                 db=db)
 
         self._name = self.add_field(TextField("username", name))
         # count how many times we serve to that person
