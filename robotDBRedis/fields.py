@@ -92,6 +92,10 @@ class ListField(Field):
     def set(self, val):
         self._arg = val
 
+    def str(self):
+        # Returns a string version of the list
+        return " ".join([str(el) for el in self._arg])
+
 
 class CustomField(Field):
     """docstring for CustomField.

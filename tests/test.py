@@ -114,7 +114,6 @@ class FieldTests(unittest.TestCase):
 
         self.assertEqual(f.get(), [1,2,3,4])
 
-
         # Deep copy test
 
         L = [1,2,3,4,5]
@@ -124,6 +123,15 @@ class FieldTests(unittest.TestCase):
         L.append(100)
 
         self.assertNotEqual(f.get(), L)
+
+        # Str conversion test
+
+        L = [1,2,3,4,5]
+
+        f.set(L)
+
+        self.assertEqual(f.str(), " ".join([str(el) for el in L]))
+
 
     def test_custom_field(self):
         class A(object):
