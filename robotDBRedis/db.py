@@ -23,3 +23,6 @@ class Database(object):
             self._redis.hmset(key, dict_to_push)
         else:
             raise Exception("Parameter should be a", dict)
+
+    def hash_increment(self, hash, field_name,incement=1):
+        self._redis.hincrby(hash, field_name, increment)
