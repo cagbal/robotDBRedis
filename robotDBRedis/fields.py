@@ -63,7 +63,7 @@ class IntField(Field):
         self._arg = self._arg - 1
 
 class CustomField(Field):
-    """docstring for NameField.
+    """docstring for CustomField.
     Just a field containing a custom object """
     def __init__(self, field_name, arg):
         super(CustomField, self).__init__(field_name, arg, type(arg))
