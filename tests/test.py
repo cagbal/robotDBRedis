@@ -4,6 +4,7 @@ import unittest
 import redis
 
 from robotDBRedis.modules import User
+from robotDBRedis.fields import IntField, TextField, CustomField
 
 def flushall():
     r = redis.Redis(host='localhost', port=6379, db=0)
@@ -80,4 +81,35 @@ class DatabaseTest(unittest.TestCase):
         self.assertEqual(user0.get_serve_count(), "1")
         self.assertEqual(user1.get_serve_count(), "145")
 
-    
+
+class FieldTests(unittest.TestCase):
+    def test_int_field(self):
+        f = IntField("random_name", 5)
+
+        self.assertEqual(f.get(), 5)
+
+        f.set(-123)
+
+        self.assertEqual(f.get(), -123)
+
+        f.increment()
+
+        self.assertEqual(f.get(), -122)
+
+        f.decrement()
+
+        self.assertEqual(f.get(), -123)
+
+    def test_text_field(self):
+        f = TextField("random_name", "cagatay")
+
+        self.assertEqual(f.get(), "cagatay")
+
+        f.set("mark")
+
+        self.assertEqual(f.get(), "mark")
+
+    def test_custom_field(self):
+        f = CustomField("random_name", [1,2,3,4])
+
+        self.assertEqual(f.get(), [1,2,3,4])
