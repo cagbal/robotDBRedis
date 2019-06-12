@@ -1,7 +1,4 @@
 #!/usr/bin/python
-
-import redis
-
 from .fields import TextField, IntField, Field
 from .db import Database
 
@@ -11,7 +8,7 @@ class Module(object):
     def __init__(self, module_name, host='localhost', port=6379, db=0, id=0):
         super(Module, self).__init__()
 
-        self._redis = Database(host=host, port=port, db=db)
+        self._db = Database(host=host, port=port, db=db)
 
         self.property_list = []
 
@@ -20,7 +17,7 @@ class Module(object):
         self._id = self.add_field(IntField("id", id))
 
     def save(self):
-        self._redis.save()
+        self._db.save()
 
     def push(self):
         """
@@ -33,7 +30,7 @@ class Module(object):
         for field in self.property_list:
             dict_to_push[field.field_name] = str(field.get()).lower()
 
-        self._redis.push(self._module_name + ":" + str(self._id.get()),
+        self._db.push(self._module_name + ":" + str(self._id.get()),
                         dict_to_push)
 
     def add_field(self, field):
