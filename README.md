@@ -6,7 +6,7 @@ This is a really young repo, so please be open to adventures.
 
 ![alt text](https://github.com/cagbal/robotDBRedis/blob/master/imgs/logo.png "robotDBRedis logo" )
 
-## Why does robotDBRedis even exists?
+## Why does robotDBRedis even exist?
 In the intelligent robotics area, the robot should keep track of the basic statistics of the users such as how many drinks served to each people or name of the users also, user preferences. That's why, I wrote robotDBRedis. It's super simple but also it helps. You can also keep track of everything in a sql or redis directly, but you need to know how to use them.  
 
 ## Features
@@ -14,8 +14,28 @@ In the intelligent robotics area, the robot should keep track of the basic stati
 - Few requirements
 - Intiutive
 
-## Usage
+## Install
 
+    git clone https://github.com/cagbal/robotDBRedis
+    cd robotDBRedis
+    sudo apt install redis-server
+    (optional) pipenv shell
+    pip install -r requirements.txt  
+    python setup.py install
+
+## Getting Started
+
+    from robotDBRedis.modules import User
+    user_1 = User("mark")
+    user.push()
+    user_2 = User("cagatay")
+    user_2.push()
+
+    # Your robot interacted  with user_1, but not with user_2
+    user_1.increment_serve_count()
+
+    print(user_1.get_serve_count()) # 1
+    print(user_2.get_serve_count()) # 0
 
 ## Fields
 Fields are data holders. For instance, you should use a TextField to store the
@@ -40,9 +60,9 @@ Just inherit the Field class and write get and set methods for the value stored.
 
 Note that the type of objects that can be stored in Redis are limited.
 
-@setter_decorator is checking if you are giving the correct type to setter also it applies deepcopy to the input.
+`@setter_decorator` is checking if you are giving the correct type to setter also it applies deepcopy to the input.
 
-The most important thing is that .get() method MUST return an object which can be converted into string with str() method. For instance, I apply " ".join([el for el in self._arg]) to ListField.
+The most important thing is that .get() method MUST return an object which can be converted into string with `str()` method. For instance, I apply `" ".join([el for el in self._arg])` to ListField.
 
 Example custom field:
 
