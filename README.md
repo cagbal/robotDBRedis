@@ -27,15 +27,44 @@ In the intelligent robotics area, the robot should keep track of the basic stati
 
     from robotDBRedis.modules import User
     user_1 = User("mark")
-    user.push()
+    user_1.push() # Push operation should be done just for once after creation
     user_2 = User("cagatay")
-    user_2.push()
+    user_2.push() # Push operation should be done just for once after creation
 
     # Your robot interacted  with user_1, but not with user_2
     user_1.increment_serve_count()
 
     print(user_1.get_serve_count()) # 1
     print(user_2.get_serve_count()) # 0
+
+    # Capturing a database entry
+    hash = "user:00001"
+    user_3 = User.capture(hash)
+    user_3.get_id() # 1
+    user_3.get_name() # mark
+
+## Modules
+Modules are main objects that hold several fields together. For instance, you may want to create a Robot module and a User module for your robotics application to store several data such as how many times did it serve or name of the robot.
+
+### Built-in Modules
+1. Abstract Module
+   - get_hash() # gets the hash used for redis database
+    - capture(hash, host='localhost', port=6379, db=0) # captures the user by using the hash
+    - push() # pushes changes to database
+    - get_id() # gets the id
+    - get_field_value(field) # gets the value of the field
+2. User
+   - get_name() # gets username
+   - get_serve_count() # how many times that people is served
+   - increment_serve_count() # increment serve count by 1
+
+
+### Creating New Modules
+You can find a good example in main_example.py. Just inherit Module class, but of course there are some rules.
+
+Whenever you write a method that modifies a data inside a Field, the you must use @update_decorator except constructor. If you use the decorator on \_\_init\_\_ this will cause useless database entries.
+
+You can add built-in IntField, TextField and ListField without any problems, but if you want to add some custom fields into the Module, then you need to dive into the code.
 
 ## Fields
 Fields are data holders. For instance, you should use a TextField to store the
