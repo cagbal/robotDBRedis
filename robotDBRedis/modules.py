@@ -3,9 +3,9 @@ from .fields import TextField, IntField, Field
 from .db import Database
 
 
-def update_decorator(func, *arg):
-    def wrapper(self, arg):
-        func(self, arg)
+def update_decorator(func):
+    def wrapper(self, *args, **kwargs):
+        func(self, *args, **kwargs)
         self.push()
     return wrapper
 
@@ -78,6 +78,7 @@ class User(Module):
     """docstring for User.
     Database class for user object. Intended to keep personal
     data of the user and some states"""
+    @update_decorator
     def __init__(self, name="user", module_name = "user",
                  host='localhost', port=6379, db=0):
         super(User, self).__init__(module_name, host=host, port=port,
@@ -88,8 +89,6 @@ class User(Module):
 
         # count how many times we serve to that person
         self._serve_counter = self.add_field(IntField("serve_count", 0))
-
-        self.push()
 
     def get_name(self):
         return self.get_field_value(self._name)
