@@ -5,6 +5,7 @@ import redis
 
 from robotDBRedis.modules import User, Module
 from robotDBRedis.fields import IntField, TextField, ListField, CustomField
+from robotDBRedis.db import Database
 
 def flushall():
     r = redis.Redis(host='localhost', port=6379, db=0)
@@ -114,6 +115,21 @@ class DatabaseTest(unittest.TestCase):
 
         self.assertEqual(user0.get_serve_count(), "1")
         self.assertEqual(user1.get_serve_count(), "145")
+
+    def test_get_all(self):
+        flushall()
+
+        user0 = User("Cagatay")#
+        user0.push()
+        user1 = User("Mark")
+        user1.push()
+
+        db = Database()
+
+        self.assertTrue({'id': '1', 'username': 'mark', 'serve_count': '0'} in
+                        db.get_objects_by_module_name("user"))
+        self.assertTrue({'id': '0', 'username': 'cagatay', 'serve_count': '0'} in
+                        db.get_objects_by_module_name("user"))
 
 
 class FieldTests(unittest.TestCase):
