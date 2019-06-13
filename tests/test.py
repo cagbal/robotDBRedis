@@ -17,12 +17,19 @@ class UserTest(unittest.TestCase):
         flushall()
 
         user0 = User("Cagatay")
+        user0.push()
         user1 = User("Mark")
+        user1.push()
         user2 = User("Daisy")
+        user2.push()
         user3 = User("Baron")
+        user3.push()
         user4 = User("Bruno")
+        user4.push()
         user5 = User("Bazzi")
+        user5.push()
         user6 = User("Jacob")
+        user6.push()
 
         self.assertEqual(user0.get_name(), "cagatay")
         self.assertEqual(user1.get_name(), "mark")
@@ -37,12 +44,19 @@ class UserTest(unittest.TestCase):
         flushall()
 
         user0 = User("Cagatay")
+        user0.push()
         user1 = User("Mark")
+        user1.push()
         user2 = User("Daisy")
+        user2.push()
         user3 = User("Baron")
+        user3.push()
         user4 = User("Bruno")
+        user4.push()
         user5 = User("Bazzi")
+        user5.push()
         user6 = User("Jacob")
+        user6.push()
 
 
         self.assertEqual(user2.get_hash(), "user:00002")
@@ -55,7 +69,9 @@ class UserTest(unittest.TestCase):
         flushall()
 
         user0 = User("Cagatay")
+        user0.push()
         user1 = User("Mark")
+        user1.push()
 
         user0.increment_serve_count()
         user0.increment_serve_count()
@@ -68,11 +84,11 @@ class UserTest(unittest.TestCase):
         flushall()
 
         user0 = User("Cagatay")
+        user0.push()
         user1 = User("Mark")
+        user1.push()
 
-        user00 = User("")
-
-        user00.capture("user:00001")
+        user00 = User.capture("user:00001")
 
         self.assertEqual(user1.get_id(), 1)
         self.assertEqual(user1.get_name(), "mark")
@@ -85,8 +101,10 @@ class DatabaseTest(unittest.TestCase):
     def test_hash_increment(self):
         flushall()
 
-        user0 = User("Cagatay")
+        user0 = User("Cagatay")#
+        user0.push()
         user1 = User("Mark")
+        user1.push()
 
         user0._db.hash_increment(user0.get_hash(),
                                 user0._serve_counter.get_field_name())

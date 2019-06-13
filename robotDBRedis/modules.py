@@ -33,18 +33,26 @@ class Module(object):
     def get_hash(self):
         return self._hash
 
-    def capture(self, hash):
+    def set_hash(self, hash):
+        self._hash = hash
+
+    @classmethod
+    def capture(cls, hash, host='localhost', port=6379, db=0):
         """
         Captures the object with its hash key
         """
 
-        obj = self._db.get_object(hash)
+        instance = cls(host='localhost', port=6379, db=0)
 
-        for p in self.field_list:
+        instance.set_hash(hash)
+
+        obj = instance._db.get_object(hash)
+
+        for p in instance.field_list:
 
             p.set(obj[p.get_field_name()])
 
-        return self
+        return instance
 
     def push(self):
         """
@@ -78,7 +86,6 @@ class User(Module):
     """docstring for User.
     Database class for user object. Intended to keep personal
     data of the user and some states"""
-    @update_decorator
     def __init__(self, name="user", module_name = "user",
                  host='localhost', port=6379, db=0):
         super(User, self).__init__(module_name, host=host, port=port,
