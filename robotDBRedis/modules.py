@@ -44,6 +44,8 @@ class Module(object):
 
             p.set(obj[p.get_field_name()])
 
+        return self
+
     def push(self):
         """
         Pushes everything to database without saving it, to save it you should
