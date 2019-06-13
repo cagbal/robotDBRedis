@@ -52,3 +52,9 @@ class Database(object):
             return int(last_id) + 1
         else:
             return 0
+
+    def clear(self):
+        """
+        Clears everything in the database
+        """
+        self._redis.flushall()
