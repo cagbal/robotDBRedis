@@ -3,9 +3,9 @@ from .fields import TextField, IntField, Field
 from .db import Database
 
 
-def update_decorator(func):
-    def wrapper(self):
-        func(self)
+def update_decorator(func, *arg):
+    def wrapper(self, arg):
+        func(self, arg)
         self.push()
     return wrapper
 
