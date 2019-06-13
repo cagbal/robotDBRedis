@@ -35,6 +35,19 @@ class Database(object):
 
         return d2
 
+    def get_objects_by_module_name(self, module_name):
+        keys = self._redis.keys(module_name + "*")
+
+        l = []
+
+        for key in keys:
+            l.append(self.get_object(key.decode("utf-8")))
+
+        print(l)
+
+        return l
+
+
     def hash_increment(self, hash, field_name,increment=1):
         self._redis.hincrby(hash, field_name, increment)
 
